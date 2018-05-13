@@ -1,0 +1,15 @@
+{
+  "dbtap_id":1,
+  "tables": [
+    {
+      "name":"customers",
+      "parallelism":1,
+      "where":null
+    },
+    {
+      "name":"account",
+      "parallelism":1,
+      "where":null
+    }
+  ]
+}
