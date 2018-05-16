@@ -1,15 +1,13 @@
 {
-  "dbtap_id":1,
+  "db_tap_variable":"MYSQL_DBTAP_ID",
   "tables": [
     {
       "name":"customers",
-      "parallelism":1,
-      "where":null
+      "parallelism":1
     },
     {
       "name":"account",
-      "parallelism":1,
-      "where":null
+      "parallelism":1
     }
   ]
 }
