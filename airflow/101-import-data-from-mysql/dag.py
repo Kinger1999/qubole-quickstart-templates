@@ -4,15 +4,8 @@ from airflow.contrib.operators.qubole_operator import QuboleOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.email_operator import EmailOperator
 from airflow.operators.python_operator import BranchPythonOperator
-from airflow.models import Variable, Connection
-from urlparse import urlparse
+from airflow.models import Variable
 import json
-
-DB_TABLE = {
-    'db_tap_variable':'MYSQL_DBTAP_ID',
-    'mysql_table':'customers',
-    'hive_table':'customers'
-}
 
 def variable_exists(key):
     if Variable.get(key) is None:
@@ -41,22 +34,27 @@ start = DummyOperator(
     dag=dag
 )
 
-import_data = QuboleOperator(
-    task_id='db_import',
-    command_type='dbimportcmd',
-    mode=1,
-    hive_table=DB_TABLE['hive_table'],
-    db_table=DB_TABLE['mysql_table'],
-    where_clause='id < 10',
-    parallelism=2,
-    dbtap_id=Variable.get("MYSQL_DBTAP_ID"),
-    dag=dag
-)
+import_table_array = []
+
+for table in conf['tables']:
+    import_table_array.append(
+        QuboleOperator(
+            task_id='db_import',
+            command_type='dbimportcmd',
+            mode=1,
+            hive_table=table['name'],
+            db_table=table['name'],
+            where_clause='id < 10',
+            parallelism=2,
+            dbtap_id=Variable.get("MYSQL_DBTAP_ID"),
+            dag=dag
+        )
+    )
 
 check_variable_exists = BranchPythonOperator (
     task_id='check_variable_exists',
     python_callable=variable_exists,
-    op_kwargs={"key":DB_TABLE['MYSQL_DBTAP_ID']},
+    op_kwargs={"key":conf['db_tap_variable']},
     trigger_rule=False,
     dag=dag
 )
@@ -76,5 +74,5 @@ end = DummyOperator(
 )
 
 start >> check_variable_exists
-check_variable_exists >> import_data >> end
+check_variable_exists >> import_table_array >> end
 check_variable_exists >> email_missing_variable >> end
