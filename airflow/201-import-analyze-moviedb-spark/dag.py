@@ -115,5 +115,5 @@ end = DummyOperator(
     dag=dag
 )
 
-start >> import_from_web >> make_hive_table >> [ count_movies_csv >> count_movies_table ] >> end
+start >> import_from_web >> make_hive_table >> [ count_movies_csv, count_movies_table ] >> end
 #                                                count csv and sql table in parallel
