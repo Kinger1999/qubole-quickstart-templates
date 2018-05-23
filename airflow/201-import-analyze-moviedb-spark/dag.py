@@ -49,7 +49,7 @@ sc = spark.sparkContext
 movies = spark.read.format("csv") \
   .option("header", "true") \
   .option("inferSchema", "true") \
-  .load("s3://qubole-public/datasets/movielens/movies.csv")
+  .load("s3://qbol-movie-data/movies/movies.csv")
 
 movies.count()
 """
