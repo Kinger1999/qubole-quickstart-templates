@@ -1,4 +1,8 @@
-# Import data from MySQL to Qubole
+![Qubole](https://cdn.qubole.com/wp-content/themes/qubole/img/qubole-logov1.png)
+
+# Qubole Quickstart Template
+
+## Import data from MySQL to Qubole
 
 Assumptions
 * You've successfuly added a mysql configuration to the Qubole [DBTap Interface](http://docs.qubole.com/en/latest/rest-api/dbtap_api/create-a-dbtap.html).
