@@ -2,8 +2,6 @@ from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.contrib.operators.qubole_operator import QuboleOperator
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.email_operator import EmailOperator
-from airflow.operators.python_operator import BranchPythonOperator
 from airflow.models import Variable
 import json
 
