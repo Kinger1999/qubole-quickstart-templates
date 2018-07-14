@@ -16,7 +16,7 @@ DAG_DEFAULTS = {
     'retry_delay': timedelta(minutes=5)
 }
 
-dag = DAG('import_from_mysql_jk', default_args=DAG_DEFAULTS, schedule_interval="@daily")
+dag = DAG('import_from_mysql', default_args=DAG_DEFAULTS, schedule_interval="@daily")
 
 conf = {
   "db_tap_variable":"MYSQL_DBTAP_ID",
