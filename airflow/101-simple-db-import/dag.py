@@ -11,7 +11,7 @@ DAG_DEFAULTS = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime(2018, 7, 10),
-    'email': ['jvillamariona@qubole.com'],
+    'email': ['me@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -36,12 +36,12 @@ conf = {
   ]
 }
 
+import_table_array = []
+
 start = DummyOperator(
     task_id='start',
     dag=dag
 )
-
-import_table_array = []
 
 for table in conf['tables']:
     task_id = "db_import_%s" % (table['name'])
@@ -50,7 +50,7 @@ for table in conf['tables']:
             task_id=task_id,
             command_type='dbimportcmd',
             mode=1,
-            db_name="dag_imported_bootcamp_db",
+            db_name="",
             hive_table=table['name'],
             db_table=table['name'],
             parallelism=table['parallelism'],
